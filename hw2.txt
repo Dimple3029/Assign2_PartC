@@ -1,0 +1,107 @@
+Part C:
+1.	Configure a new git repository in the file system
+
+Ankitdimple@Dimple MINGW64 //dimple/Users/Ankitdimple (master)
+$ mkdir Part_C
+
+Ankitdimple@Dimple MINGW64 //dimple/Users/Ankitdimple (master)
+$ cd Part_C
+
+Ankitdimple@Dimple MINGW64 //dimple/Users/Ankitdimple/Part_C (master)
+$ git init
+Initialized empty Git repository in //dimple/Users/Ankitdimple/Part_C/.git/
+
+
+2.	Command to configure the remote 
+Ankitdimple@Dimple MINGW64 //dimple/Users/Ankitdimple/Part_C (master)
+$ git remote add part_C_2 https://github.com/Dimple3029/Assign2_PartC.git
+
+
+To verify the remote:
+
+Ankitdimple@Dimple MINGW64 //dimple/Users/Ankitdimple/Part_C (master)
+$ git remote -v
+part_C_2        https://github.com/Dimple3029/Assign2_PartC.git (fetch)
+part_C_2        https://github.com/Dimple3029/Assign2_PartC.git (push)
+
+
+3.	Output of the git remote-v when we clone the repo from afs
+Ans: Nothing will show up in the output when we run the git remote-v because remote is not yet configured.
+
+4.	Run git fetch remotename(Substituting your remote name for remotename)
+Ankitdimple@Dimple MINGW64 //dimple/Users/Ankitdimple/Part_C (master)
+$ git fetch part_C_2
+remote: Counting objects: 6, done.
+remote: Total 6 (delta 0), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (6/6), done.
+From https://github.com/Dimple3029/Assign2_PartC
+ * [new branch]      master     -> part_C_2/master
+
+No, nothing is appeared in the working directory, because we just fetch the changes and have not merge it yet to reflect in the working directory.
+
+5.	Update the local master branch with the remote one and command used is below:
+
+Ankitdimple@Dimple MINGW64 //dimple/Users/Ankitdimple/Part_C (master)
+
+$ git merge part_C_2/master
+
+Now working directory is updated.
+
+
+6.	Command to find all the branches we may have gotten from the remote.
+
+Ankitdimple@Dimple MINGW64 //dimple/Users/Ankitdimple/Part_C (master)
+      $ git branch -a
+      * master
+  remotes/part_C_2/branch1
+  remotes/part_C_2/branch2
+  remotes/part_C_2/master
+
+
+7.	Command used to checkout the remote branch 
+
+git checkout part_C_2/branch2 
+
+git log –p 
+
+git checkout part_C_2/branch2 Hello
+
+
+8.	Checkout the branch so that it creates a local branch based on the remote-tracking branch. The command is below:
+
+Ankitdimple@Dimple MINGW64 //dimple/Users/Ankitdimple/Part_C ((c4802fa...))
+$ git checkout part_C_2/branch2 -b branch3
+Branch branch3 set up to track remote branch branch2 from part_C_2.
+Switched to a new branch 'branch3'
+
+Ankitdimple@Dimple MINGW64 //dimple/Users/Ankitdimple/Part_C ((17defd7...))
+$ git checkout master
+Switched to branch 'master'
+
+
+Q-What is a bare repository? What makes it different from normal repositories? In what situations is it used?
+
+Ans. A bare repository is created by git init -bare, which is meant for sharing. They have no working tree.
+
+They are different in structure from the working directories as they contain no working or checked out copy of your source files. Repositories created with the git init command are called working directories. Bare repos store git revision history of your repo in the root folder of your repository instead of in a .git subfolder. 
+
+It is mostly used when we need to collaborate with a developers team and need a place to share changes to a repo in that case we need bare repo at centralized place where all users can push their changes.
+
+
+Q-In lecture, I was careful to explain the two-step procedure of using git fetch and git merge remotename/branchname to get commits from a remote. When would this be a good idea as opposed to simply doing git pull remotename branchname? Briefly discuss remote-tracking branches and their relevance in your answer.
+
+Ans. Git fetch basically collects any commits from the target branch that does not exist in the current branch and stores them in the local repository. However, it does not merge them with our current branch. This is useful when we need to keep our repository up to date, but are working on something that might break if we update our files. To integrate the commits into the master branch, we use merge. However when we use git pull it automatically merges the commits without letting us review them first.
+Remote -tracking branches - 
+Remote tracking branches are the ones that act as bookmarks to remind us where the branches in the remote repositories were the last time we connected to them. These are local references that are moved automatically for us when we do network communication.
+1) They are used to link what we are working on locally compared to what ís on the remote.
+2) They will automatically know what remote branch to get changes from when we use git pull or git fetch.
+3) git status will recognize him how many commits you are in front of the remote version of the branch.
+
+Q-I didn't ask you to do this, but suppose I asked you to make a commit on the 'other' branch. If I wanted you to push this branch, what command would you use?
+Ans.	First checkout to the other branch with:
+            git checkout branchname
+            Then make any commit in that branch by:
+            git commit -m “initial commit”
+           To push this branch, we use:
+           git push origin branchname
+
